@@ -1,4 +1,4 @@
-/*#pragma once
+#pragma once
 #include "../buffered/Buffered.h"
 #include "../moded/Moded.h"
 #include "../colored/Colored.h"
@@ -17,4 +17,4 @@ public:
                  sf::Vector2f texture_pos) override;
   bool onMouseMove(sf::RenderTexture &render_texture, sf::Vector2f mouse_pos,
                    sf::Vector2f texture_pos) override;
-};*/
+};
