@@ -1,0 +1,8 @@
+BasedOnStyle: LLVM
+AllowShortFunctionsOnASingleLine: Empty
+
+ColumnLimit: 0
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterControlStatement: false
+  BeforeElse: true
