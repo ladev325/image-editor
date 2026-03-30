@@ -17,10 +17,11 @@ LayerViewer::LayerViewer(sf::Vector2u size, sf::Vector2f position,
   frame.setOutlineThickness(outline_thickness);
   frame.setOutlineColor(outline_color);
 
-  PencilConfig config;
-  config.color = sf::Color(0, 255, 0, 50);
-  config.mode = PencilMode::IncreaseAlpha;
-  mode = std::make_unique<Pencil>(config);
+  BrushConfig config;
+  config.color = sf::Color(0, 0, 255);
+  //config.mode = PenMode::IncreaseAlpha;
+  config.thickness = 25;
+  mode = std::make_unique<Brush>(config);
   mode->setTextureSize(size);
 }
 
@@ -65,9 +66,10 @@ void LayerViewer::onMouseDrag(sf::Vector2f mouse_pos) {
 
 void LayerViewer::onMouseWheel(float delta, sf::Vector2f mouse_pos) {
   float prev_scale = scale;
-  linear_scale = std::clamp(linear_scale + delta * SCALE_SPEED,
-                            SCALE_LINEAR_MIN, SCALE_LINEAR_MAX);
-  scale = std::pow(linear_scale, SCALE_POW);
+  linear_scale = std::clamp(linear_scale + delta * Constants::Viewer::ScaleSpeed,
+                            Constants::Viewer::ScaleLinearMin, 
+                            Constants::Viewer::ScaleLinearMax);
+  scale = std::pow(linear_scale, Constants::Viewer::ScalePow);
   sf::Vector2f mouse_offset = mouse_pos - frame.getPosition() - frame.getSize() / 2.f;
   sf::Vector2f pos_diff = mouse_offset / scale - mouse_offset / prev_scale;
   position -= pos_diff;
@@ -174,10 +176,10 @@ void LayerViewer::render(sf::RenderWindow &window) {
   inner_frame.setPosition(zoomed_rect.getPosition());
   inner_frame.setSize(zoomed_rect.getSize());
   inner_frame.setFillColor(sf::Color::Transparent);
-  inner_frame.setOutlineThickness(VIEWER_INNER_FRAME_THICKNESS);
-  inner_frame.setOutlineColor(VIEWER_INNER_FRAME_COLOR);
+  inner_frame.setOutlineThickness(Constants::Viewer::InnerFrameThickness);
+  inner_frame.setOutlineColor(Constants::Viewer::InnerFrameColor);
 
-  zoomed_rect_texture.clear(VIEWER_BACKGROUND_COLOR);
+  zoomed_rect_texture.clear(Constants::Viewer::BgColor);
   zoomed_rect_texture.draw(zoomed_rect);
   zoomed_rect_texture.draw(inner_frame);
   zoomed_rect_texture.display();

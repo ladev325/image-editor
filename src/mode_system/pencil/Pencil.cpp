@@ -5,10 +5,11 @@ Pencil::Pencil(PencilConfig config)
     : Moded(config.mode), Colored(config.color),
       prev_pos({0, 0}), is_down(false) {}
 
-void Pencil::updateTexture(sf::RenderTexture &render_texture) const {
+void Pencil::updateTexture(sf::RenderTexture &render_texture) {
   if (getMode() == PencilMode::KeepAlpha) {
     render_texture.clear(sf::Color::Transparent);
     render_texture.draw(snapshot_sprite);
+    buffer_sprite.setColor(getColor());
     render_texture.draw(buffer_sprite);
   }
   render_texture.display();
@@ -31,7 +32,6 @@ bool Pencil::onMouseDown(sf::RenderTexture &render_texture,
     buffer_texture.clear(sf::Color::Transparent);
     buffer_texture.draw(&pixel, 1, sf::PrimitiveType::Points);
     buffer_texture.display();
-    buffer_sprite.setColor(getColor());
   }
   else {
     render_texture.draw(&pixel, 1, sf::PrimitiveType::Points);
@@ -72,7 +72,6 @@ bool Pencil::onMouseMove(sf::RenderTexture &render_texture,
         buffer_texture.draw(line);
         buffer_texture.draw(&pixel, 1, sf::PrimitiveType::Points);
         buffer_texture.display();
-        buffer_sprite.setColor(getColor());
       }
       else {
         render_texture.draw(line);

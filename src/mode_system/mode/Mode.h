@@ -1,5 +1,6 @@
 #pragma once
 #include "../config.h" // IWYU pragma: export
+#include "constants.h" // IWYU pragma: export
 #include <SFML/Graphics.hpp>
 
 class Mode {

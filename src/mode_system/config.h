@@ -6,3 +6,9 @@ struct PencilConfig {
     sf::Color color = sf::Color::Red;
     PencilMode mode = PencilMode::KeepAlpha;
 };
+
+enum class BrushMode { KeepAlpha, IncreaseAlpha };
+struct BrushConfig {
+    sf::Color color = sf::Color::Red;
+    float thickness = 4;
+};
