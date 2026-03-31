@@ -1,5 +1,4 @@
 #pragma once
-#include "constants.h" // IWYU pragma: export
 #include <SFML/Graphics.hpp>
 
 class Layer {

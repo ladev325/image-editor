@@ -1,7 +1,7 @@
 #include "LayerViewer.h"
+#include "constants.h"
 #include <algorithm>
 #include <cmath>
-#include <memory>
 
 LayerViewer::LayerViewer() : LayerViewer({300, 300}, {0, 0}, {300, 300}) {}
 LayerViewer::LayerViewer(sf::Vector2u size, sf::Vector2f position,
@@ -19,7 +19,7 @@ LayerViewer::LayerViewer(sf::Vector2u size, sf::Vector2f position,
 
   BrushConfig config;
   config.color = sf::Color(0, 0, 255);
-  //config.mode = PenMode::IncreaseAlpha;
+  // config.mode = PenMode::IncreaseAlpha;
   config.thickness = 25;
   mode = std::make_unique<Brush>(config);
   mode->setTextureSize(size);
@@ -67,7 +67,7 @@ void LayerViewer::onMouseDrag(sf::Vector2f mouse_pos) {
 void LayerViewer::onMouseWheel(float delta, sf::Vector2f mouse_pos) {
   float prev_scale = scale;
   linear_scale = std::clamp(linear_scale + delta * Constants::Viewer::ScaleSpeed,
-                            Constants::Viewer::ScaleLinearMin, 
+                            Constants::Viewer::ScaleLinearMin,
                             Constants::Viewer::ScaleLinearMax);
   scale = std::pow(linear_scale, Constants::Viewer::ScalePow);
   sf::Vector2f mouse_offset = mouse_pos - frame.getPosition() - frame.getSize() / 2.f;

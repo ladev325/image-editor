@@ -1,7 +1,5 @@
 #pragma once
-#include "../buffered/Buffered.h"
-#include "../moded/Moded.h"
-#include "../colored/Colored.h"
+#include "../base/base.h"
 
 class Pencil : public Buffered, public Moded<PencilMode>, public Colored {
 private:

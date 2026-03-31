@@ -1,9 +1,7 @@
 #pragma once
-#include "../buffered/Buffered.h"
-#include "../colored/Colored.h"
-#include "../thick/Thick.h"
-#include "../antialiased/Antialiased.h"
+#include "../base/base.h"
 
+// too different from pencil to create a shared base, sorry bud
 class Brush : public Buffered, public Colored, public Thick, public Antialiased {
 private:
   sf::Vector2i prev_pos;

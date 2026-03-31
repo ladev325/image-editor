@@ -1,5 +1,4 @@
 #include "Layer.h"
-#include "SFML/Graphics/BlendMode.hpp"
 
 Layer::Layer() : Layer({300, 300}) {}
 Layer::Layer(sf::Vector2u size)
