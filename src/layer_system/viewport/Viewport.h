@@ -1,7 +1,6 @@
 #pragma once
 #include "../compositor/Compositor.h"
-
-class Mode;
+#include "../../mode_system/mode_system.h" // IWYU pragma: export
 
 class Viewport {
 private:

@@ -3,12 +3,8 @@
 #include <SFML/Window.hpp>
 
 #include "imgui-SFML.h"
-#include "imgui.h"
-#include <iostream>
 
 #include "layer_system/viewport/Viewport.h"
-
-// TODO: Stop viewer inheritance from container
 
 int main() {
 
