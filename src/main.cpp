@@ -6,7 +6,9 @@
 #include "imgui.h"
 #include <iostream>
 
-#include "layer_system/layer_viewer/LayerViewer.h"
+#include "layer_system/viewport/Viewport.h"
+
+// TODO: Stop viewer inheritance from container
 
 int main() {
 
@@ -16,14 +18,13 @@ int main() {
   if (!ImGui::SFML::Init(window)) {
     return -1;
   }
-  sf::Clock deltaClock;
 
+  sf::Clock delta_clock;
   sf::Vector2u window_size = window.getSize();
 
-  LayerViewer layer_viewer({1000, 1000}, {100, 100}, {1000, 1000}, 2, sf::Color::White);
-  layer_viewer.LAYER_TEST();
-  //layer_viewer.setSize({5001, 5001});
-  layer_viewer.display();
+  Viewport viewport({1000, 1000}, {100, 100}, {1000, 1000}, 2, sf::Color::White);
+  viewport.LAYER_TEST();
+  //viewport.setSize({5001, 5001});
 
   while (window.isOpen()) {
     while (const auto event = window.pollEvent()) {
@@ -42,24 +43,20 @@ int main() {
         view.setCenter(sf::Vector2f(window_size) / 2.f);
         window.setView(view);
 
-        layer_viewer.setFrameSize(window_size_f * 0.9f);
-        layer_viewer.setPosition((window_size_f - layer_viewer.getFrameSize()) / 2.f);
+        viewport.setFrameSize(window_size_f * 0.9f);
+        viewport.setPosition((window_size_f - viewport.getFrameSize()) / 2.f);
       }
 
-      layer_viewer.tick(*event, window);
+      viewport.tick(*event, window);
     }
 
-    // ImGui::SFML::Update(window, deltaClock.restart());
-    // ImGui::Begin("Hello, world!");
-    // ImGui::Button("Look at this pretty button");
-    // ImGui::End();
-
+    ImGui::SFML::Update(window, delta_clock.restart());
     window.clear();
-    layer_viewer.render(window);
-
-    // ImGui::SFML::Render(window);
+    viewport.render(window);
+    ImGui::SFML::Render(window);
     window.display();
   }
 
   ImGui::SFML::Shutdown();
+  return 0;
 }

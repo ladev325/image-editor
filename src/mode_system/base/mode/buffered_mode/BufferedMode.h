@@ -1,10 +1,10 @@
 #pragma once
-#include "../mode/Mode.h"
+#include "../Mode.h"
 
-class Buffered : public Mode {
+class BufferedMode : public Mode {
 public:
-  Buffered();
-  Buffered(sf::Vector2u texture_size);
+  BufferedMode();
+  BufferedMode(sf::Vector2u texture_size);
   void setTextureSize(sf::Vector2u texture_size) override;
 
 protected:

@@ -1,8 +1,8 @@
-#include "LayerContainer.h"
+#include "Compositor.h"
 #include <stdexcept>
 
-LayerContainer::LayerContainer() : LayerContainer({300, 300}) {}
-LayerContainer::LayerContainer(sf::Vector2u size)
+Compositor::Compositor() : Compositor({300, 300}) {}
+Compositor::Compositor(sf::Vector2u size)
     : texture_full(size),
       texture_bottom(size), sprite_bottom(texture_bottom.getTexture()),
       texture_top(size), sprite_top(texture_top.getTexture()) {
@@ -19,7 +19,7 @@ LayerContainer::LayerContainer(sf::Vector2u size)
 
 // ---------PRIVATE---------
 
-void LayerContainer::bufferChanges() {
+void Compositor::bufferChanges() {
   sf::Vector2u resolution = getSize();
 
   // assemble bottom
@@ -63,7 +63,7 @@ void LayerContainer::bufferChanges() {
 
 // ---------PUBLIC SIZE---------
 
-void LayerContainer::setSize(sf::Vector2u size) {
+void Compositor::setSize(sf::Vector2u size) {
   (void)texture_full.resize(size);
   for (auto &layer : layers) {
     layer.setSize(size);
@@ -71,18 +71,18 @@ void LayerContainer::setSize(sf::Vector2u size) {
   bufferChanges();
 }
 
-sf::Vector2u LayerContainer::getSize() const {
+sf::Vector2u Compositor::getSize() const {
   return texture_full.getSize();
 }
 
 // ---------PUBLIC LAYERS---------
 
-void LayerContainer::addLayer() {
+void Compositor::addLayer() {
   layers.emplace_back(getSize());
   bufferChanges();
 }
 
-void LayerContainer::removeLayer(int index) {
+void Compositor::removeLayer(int index) {
   // validate input
   if (index < 0 || index >= layers.size()) {
     throw std::invalid_argument("Layer index is out of range");
@@ -107,7 +107,7 @@ void LayerContainer::removeLayer(int index) {
   bufferChanges();
 }
 
-void LayerContainer::setActiveLayer(int index) {
+void Compositor::setActiveLayer(int index) {
   if (index < 0 || index >= layers.size()) {
     throw std::invalid_argument("Layer index is out of range");
   }
@@ -115,16 +115,16 @@ void LayerContainer::setActiveLayer(int index) {
   bufferChanges();
 }
 
-int LayerContainer::getActiveLayerIndex() const {
+int Compositor::getActiveLayerIndex() const {
   auto const_it = std::list<Layer>::const_iterator(active_layer);
   return std::distance(layers.begin(), const_it);
 }
 
-int LayerContainer::getLayerCount() const {
+int Compositor::getLayerCount() const {
   return layers.size();
 }
 
-void LayerContainer::display() {
+void Compositor::display() {
   texture_full.clear(sf::Color::Transparent);
 
   // draw bottom
@@ -155,10 +155,10 @@ void LayerContainer::display() {
 
 // ---------PROTECTED---------
 
-sf::RenderTexture &LayerContainer::getActiveTexture() {
+sf::RenderTexture &Compositor::getActiveTexture() {
   return active_layer->getRenderTexture();
 }
 
-const sf::RenderTexture &LayerContainer::getFullTexture() const {
+const sf::RenderTexture &Compositor::getOutputTexture() const {
   return texture_full;
 }

@@ -4,9 +4,10 @@ class Thick {
 private:
   int thickness;
 
-public:
+protected:
   Thick();
   Thick(int thickness);
+  virtual ~Thick() = default;
   void setThickness(int thickness);
   int getThickness() const;
 };

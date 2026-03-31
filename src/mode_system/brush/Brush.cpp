@@ -1,8 +1,8 @@
 #include "Brush.h"
 #include <cmath>
 
-Brush::Brush(BrushConfig config)
-    : Colored(config.color), Thick(config.thickness),
+Brush::Brush()
+    : Antialiased(true), Colored(sf::Color::Blue), Thick(20),
       prev_pos({0, 0}), is_down(false) {}
 
 void Brush::drawPoint(sf::RenderTexture &render_texture,
@@ -44,7 +44,7 @@ void Brush::updateTexture(sf::RenderTexture &render_texture) {
   render_texture.clear(sf::Color::Transparent);
   render_texture.draw(snapshot_sprite);
   buffer_sprite.setColor(getColor());
-  render_texture.draw(buffer_sprite, &getAAShader());
+  render_texture.draw(buffer_sprite, getAAShader());
   render_texture.display();
 }
 

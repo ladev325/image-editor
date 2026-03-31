@@ -1,8 +1,8 @@
 #include "Pencil.h"
 #include <cmath>
 
-Pencil::Pencil(PencilConfig config)
-    : Moded(config.mode), Colored(config.color),
+Pencil::Pencil()
+    : Moded(PencilMode::IncreaseAlpha), Colored(sf::Color::Blue),
       prev_pos({0, 0}), is_down(false) {}
 
 void Pencil::updateTexture(sf::RenderTexture &render_texture) {

@@ -2,7 +2,7 @@
 #include "../layer/Layer.h"
 #include <list>
 
-class LayerContainer {
+class Compositor {
 private:
   std::list<Layer> layers;
   mutable std::list<Layer>::iterator active_layer;
@@ -14,9 +14,9 @@ private:
   void bufferChanges();
 
 public:
-  LayerContainer();
-  LayerContainer(sf::Vector2u size);
-  virtual void setSize(sf::Vector2u size);
+  Compositor();
+  Compositor(sf::Vector2u size);
+  void setSize(sf::Vector2u size);
   sf::Vector2u getSize() const;
   void addLayer();
   void removeLayer(int index);
@@ -24,8 +24,6 @@ public:
   int getActiveLayerIndex() const;
   int getLayerCount() const;
   void display();
-
-protected:
   sf::RenderTexture &getActiveTexture();
-  const sf::RenderTexture &getFullTexture() const;
+  const sf::RenderTexture &getOutputTexture() const; 
 };

@@ -4,8 +4,9 @@ class Moded {
 private:
   T mode;
 
-public:
+protected:
   Moded(T mode) : mode(mode) {}
+  virtual ~Moded() = default;
   void setMode(T mode) {
     this->mode = mode;
   }

@@ -1,14 +1,14 @@
-#include "Buffered.h"
+#include "BufferedMode.h"
 
-Buffered::Buffered() : Buffered({300, 300}) {}
-Buffered::Buffered(sf::Vector2u texture_size)
+BufferedMode::BufferedMode() : BufferedMode({300, 300}) {}
+BufferedMode::BufferedMode(sf::Vector2u texture_size)
     : snapshot_texture(texture_size),
       snapshot_sprite(snapshot_texture.getTexture()),
       buffer_texture(texture_size),
       buffer_sprite(buffer_texture.getTexture()) {
 }
 
-void Buffered::setTextureSize(sf::Vector2u texture_size) {
+void BufferedMode::setTextureSize(sf::Vector2u texture_size) {
   if (snapshot_texture.resize(texture_size)) {
     snapshot_sprite.setTexture(snapshot_texture.getTexture(), true);
   }

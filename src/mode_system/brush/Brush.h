@@ -2,7 +2,7 @@
 #include "../base/base.h"
 
 // too different from pencil to create a shared base, sorry bud
-class Brush : public Buffered, public Colored, public Thick, public Antialiased {
+class Brush : public BufferedMode, public Antialiased, public Colored, public Thick {
 private:
   sf::Vector2i prev_pos;
   bool is_down;
@@ -12,7 +12,7 @@ private:
                 sf::Vector2f pos1, sf::Vector2f pos2, sf::Color color);
 
 public:
-  Brush(BrushConfig config = {});
+  Brush();
   bool onMouseDown(sf::RenderTexture &render_texture, sf::Vector2f mouse_pos,
                    sf::Vector2f texture_pos) override;
   bool onMouseUp(sf::RenderTexture &render_texture, sf::Vector2f mouse_pos,

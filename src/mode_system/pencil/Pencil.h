@@ -1,14 +1,16 @@
 #pragma once
 #include "../base/base.h"
 
-class Pencil : public Buffered, public Moded<PencilMode>, public Colored {
+enum class PencilMode { KeepAlpha, IncreaseAlpha };
+
+class Pencil : public BufferedMode, public Moded<PencilMode>, public Colored {
 private:
   sf::Vector2i prev_pos;
   bool is_down;
   void updateTexture(sf::RenderTexture &render_texture);
 
 public:
-  Pencil(PencilConfig config = {});
+  Pencil();
   bool onMouseDown(sf::RenderTexture &render_texture, sf::Vector2f mouse_pos,
                    sf::Vector2f texture_pos) override;
   bool onMouseUp(sf::RenderTexture &render_texture, sf::Vector2f mouse_pos,

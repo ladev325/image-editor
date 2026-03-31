@@ -5,9 +5,10 @@ class Colored {
 private:
   sf::Color color;
 
-public:
+protected:
   Colored();
   Colored(sf::Color color);
+  virtual ~Colored() = default;
   void setColor(sf::Color color);
   sf::Color getColor() const;
 };
