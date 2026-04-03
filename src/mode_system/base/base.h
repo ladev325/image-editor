@@ -6,5 +6,6 @@
 #include "colored/Colored.h"         // IWYU pragma: export
 #include "mode/Mode.h"               // IWYU pragma: export
 #include "moded/Moded.h"             // IWYU pragma: export
+#include "shadered/Shadered.h"       // IWYU pragma: export
 #include "thickened/Thickened.h"     // IWYU pragma: export
 #include "thresholded/Thresholded.h" // IWYU pragma: export

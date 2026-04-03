@@ -3,7 +3,7 @@
 
 enum class FillMode { Local, Global };
 
-class Fill : public Mode, public Moded<FillMode>, public Colored, public Thresholded {
+class Fill : public BufferedMode, public Moded<FillMode>, public Shadered, public Colored, public Thresholded {
 private:
 
 public:

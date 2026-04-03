@@ -4,7 +4,8 @@
 
 namespace Constants {
     namespace Path {
-        inline const std::string ShapeAA = "shaders/shape_aa.frag";
+        inline const std::string ShapeAAShader = "shaders/shape_aa.frag";
+        inline const std::string FillShader = "shaders/fill.frag";
     }
 
     namespace Viewer {
@@ -18,7 +19,7 @@ namespace Constants {
         inline constexpr int InnerFrameThickness = 4;
     }
 
-    namespace ShapeAA {
+    namespace ShapeAAShader {
         inline constexpr int Radius = 1;
         inline constexpr float TightCoef = 0.15f;
     }

@@ -17,13 +17,13 @@ void Antialiased::loadShader() {
   }
 
   shader.emplace();
-  if (!shader->loadFromFile(Constants::Path::ShapeAA, sf::Shader::Type::Fragment)) {
+  if (!shader->loadFromFile(Constants::Path::ShapeAAShader, sf::Shader::Type::Fragment)) {
     shader.reset();
-    throw std::runtime_error("Error loading " + Constants::Path::ShapeAA);
+    throw std::runtime_error("Error loading " + Constants::Path::ShapeAAShader);
   }
 
-  shader->setUniform("radius", Constants::ShapeAA::Radius);
-  shader->setUniform("tight_coef", Constants::ShapeAA::TightCoef);
+  shader->setUniform("radius", Constants::ShapeAAShader::Radius);
+  shader->setUniform("tight_coef", Constants::ShapeAAShader::TightCoef);
 }
 
 void Antialiased::setAAState(bool state) {

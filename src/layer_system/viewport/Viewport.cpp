@@ -258,7 +258,7 @@ sf::Vector2f Viewport::getFrameSize() const {
 }
 
 void Viewport::LAYER_TEST() {
-  sf::Texture imageTexture("src/al.jpg");
+  sf::Texture imageTexture("src/stress2.jpg");
   sf::Sprite imageSprite(imageTexture);
   setSize(imageTexture.getSize());
 
