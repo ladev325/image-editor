@@ -2,7 +2,7 @@
 #include "../base/base.h"
 
 // too different from pencil to create a shared base, sorry bud
-class Brush : public BufferedMode, public Antialiased, public Colored, public Thick {
+class Brush : public BufferedMode, public Antialiased, public Colored, public Thickened {
 private:
   sf::Vector2i prev_pos;
   bool is_down;

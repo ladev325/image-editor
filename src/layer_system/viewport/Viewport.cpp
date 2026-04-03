@@ -19,7 +19,7 @@ Viewport::Viewport(sf::Vector2u size, sf::Vector2f position,
   frame.setOutlineThickness(outline_thickness);
   frame.setOutlineColor(outline_color);
 
-  mode = std::make_unique<Brush>();
+  mode = std::make_unique<Fill>();
   mode->setTextureSize(size);
 }
 
@@ -74,9 +74,9 @@ void Viewport::renderViewer(sf::RenderWindow &window) {
 }
 
 void Viewport::renderUI() {
-  ImGui::Begin("Hello, world!");
-  ImGui::Button("Look at this pretty button");
-  ImGui::End();
+  // ImGui::Begin("Hello, world!");
+  // ImGui::Button("Look at this pretty button");
+  // ImGui::End();
   mode->drawUI();
 }
 
@@ -258,7 +258,7 @@ sf::Vector2f Viewport::getFrameSize() const {
 }
 
 void Viewport::LAYER_TEST() {
-  sf::Texture imageTexture("src/img.png");
+  sf::Texture imageTexture("src/al.jpg");
   sf::Sprite imageSprite(imageTexture);
   setSize(imageTexture.getSize());
 

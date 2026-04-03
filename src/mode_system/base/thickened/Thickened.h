@@ -1,13 +1,13 @@
 #pragma once
 
-class Thick {
+class Thickened {
 private:
   int thickness;
 
 protected:
-  Thick();
-  Thick(int thickness);
-  virtual ~Thick() = default;
+  Thickened();
+  Thickened(int thickness);
+  virtual ~Thickened() = default;
   void setThickness(int thickness);
   int getThickness() const;
 };

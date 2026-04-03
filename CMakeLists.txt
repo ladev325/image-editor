@@ -4,6 +4,14 @@ project(image_editor
     VERSION 1.0
     )
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# Enable aggressive optimizations
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native -DNDEBUG")
+set(CMAKE_CXX_FLAGS_DEBUG "-O2 -g")
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
 add_subdirectory(dependencies)
 file(GLOB_RECURSE SOURCE_FILES "src/*.cpp" "src/*.h")
 

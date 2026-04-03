@@ -3,8 +3,10 @@
 #include <SFML/Window.hpp>
 
 #include "imgui-SFML.h"
-
 #include "layer_system/viewport/Viewport.h"
+
+// TODO: add CurrentMode(&render_texture) for texture caching on create, 
+// -> cache for the next action right after onMouseDown
 
 int main() {
 

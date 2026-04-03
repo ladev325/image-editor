@@ -2,7 +2,7 @@
 #include <cmath>
 
 Brush::Brush()
-    : Antialiased(true), Colored(sf::Color::Blue), Thick(20),
+    : Antialiased(true), Colored(sf::Color::Blue), Thickened(20),
       prev_pos({0, 0}), is_down(false) {}
 
 void Brush::drawPoint(sf::RenderTexture &render_texture,
