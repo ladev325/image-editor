@@ -22,7 +22,7 @@ int main() {
 
   Viewport viewport({1000, 1000}, {100, 100}, {1000, 1000}, 2, sf::Color::White);
   viewport.LAYER_TEST();
-  //viewport.setSize({5001, 5001});
+  //viewport.setSize({15000, 15000});
 
   while (window.isOpen()) {
     while (const auto event = window.pollEvent()) {

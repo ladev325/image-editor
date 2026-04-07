@@ -13,7 +13,7 @@ private:
   bool mouse_down = false;
   sf::RenderTexture zoomed_rect_texture;
   sf::Sprite zoomed_rect_sprite;
-  std::unique_ptr<Mode> mode;
+  std::unique_ptr<IMode> mode;
 
   // render
   void renderViewer(sf::RenderWindow &window);

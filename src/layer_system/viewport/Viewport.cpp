@@ -19,7 +19,7 @@ Viewport::Viewport(sf::Vector2u size, sf::Vector2f position,
   frame.setOutlineThickness(outline_thickness);
   frame.setOutlineColor(outline_color);
 
-  mode = std::make_unique<Fill>();
+  mode = std::make_unique<FillMode>();
   mode->setTextureSize(size);
 }
 

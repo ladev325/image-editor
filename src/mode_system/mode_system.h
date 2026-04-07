@@ -1,4 +1,4 @@
 #pragma once
-#include "brush/Brush.h"   // IWYU pragma: export
-#include "fill/Fill.h"     // IWYU pragma: export
-#include "pencil/Pencil.h" // IWYU pragma: export
+#include "modes/brush/BrushMode.h"   // IWYU pragma: export
+#include "modes/fill/FillMode.h"     // IWYU pragma: export
+#include "modes/pencil/PencilMode.h" // IWYU pragma: export

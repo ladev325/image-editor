@@ -1,16 +1,15 @@
 #pragma once
-#include "../base/base.h"
+#include "../../base/buffered_mode/BufferedMode.h"
+#include "../../utils/shaderer/Shaderer.h"
+#include "FillSettings.h"
 
-enum class PencilMode { KeepAlpha, IncreaseAlpha };
-
-class Pencil : public BufferedMode, public Moded<PencilMode>, public Colored {
+class FillMode : public BufferedMode {
 private:
-  sf::Vector2i prev_pos;
-  bool is_down;
-  void updateTexture(sf::RenderTexture &render_texture);
+  FillSettings settings;
+  Shaderer shaderer;
 
 public:
-  Pencil();
+  FillMode();
   bool onMouseDown(sf::RenderTexture &render_texture, sf::Vector2f mouse_pos,
                    sf::Vector2f texture_pos) override;
   bool onMouseUp(sf::RenderTexture &render_texture, sf::Vector2f mouse_pos,

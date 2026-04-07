@@ -1,19 +1,19 @@
-#include "Fill.h"
+#include "FillMode.h"
 #include "constants.h"
 
-Fill::Fill()
-    : Moded(FillMode::Global),
-      Shadered(Constants::Path::FillShader),
-      Colored(sf::Color::Blue),
-      Thresholded(0.1) {}
+FillMode::FillMode()
+    : BufferedMode(1),
+      shaderer(Constants::Path::FillShader) {
+  i_settings = &settings;
+}
 
-bool Fill::onMouseDown(sf::RenderTexture &render_texture,
-                       sf::Vector2f mouse_pos, sf::Vector2f texture_pos) {
+bool FillMode::onMouseDown(sf::RenderTexture &render_texture,
+                           sf::Vector2f mouse_pos, sf::Vector2f texture_pos) {
   sf::Vector2u size = render_texture.getSize();
-  sf::Color new_color = getColor();
-  float threshold = getThreshold();
+  sf::Color new_color = settings.color;
+  float threshold = settings.threshold;
 
-  if (getMode() == FillMode::Local) {
+  if (settings.mode == FillSettings::Mode::Local) {
     // prepare image
     sf::Vector2u texture_pos_i = sf::Vector2u(texture_pos);
     sf::Image image = render_texture.getTexture().copyToImage();
@@ -68,25 +68,25 @@ bool Fill::onMouseDown(sf::RenderTexture &render_texture,
 
   else {
     float threshold_sq = threshold * threshold * 4.f;
-    buffer_texture.draw(sf::Sprite(render_texture.getTexture()));
-    sf::Shader *shader = getShader();
+    buffer_textures[0]->draw(sf::Sprite(render_texture.getTexture()));
+    sf::Shader *shader = shaderer.getShader();
     shader->setUniform("resolution", sf::Vector2f(size));
     shader->setUniform("click_pos", texture_pos);
     shader->setUniform("color", sf::Glsl::Vec4(new_color));
     shader->setUniform("threshold_sq", threshold_sq);
-    render_texture.draw(buffer_sprite, shader);
+    render_texture.draw(buffer_sprites[0], shader);
   }
 
   render_texture.display();
   return true;
 }
 
-bool Fill::onMouseUp(sf::RenderTexture &render_texture,
-                     sf::Vector2f mouse_pos, sf::Vector2f texture_pos) {
+bool FillMode::onMouseUp(sf::RenderTexture &render_texture,
+                         sf::Vector2f mouse_pos, sf::Vector2f texture_pos) {
   return false;
 }
 
-bool Fill::onMouseMove(sf::RenderTexture &render_texture,
-                       sf::Vector2f mouse_pos, sf::Vector2f texture_pos) {
+bool FillMode::onMouseMove(sf::RenderTexture &render_texture,
+                           sf::Vector2f mouse_pos, sf::Vector2f texture_pos) {
   return false;
 }

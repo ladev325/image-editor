@@ -1,9 +1,12 @@
 #pragma once
-#include "../base/base.h"
+#include "../../base/buffered_mode/BufferedMode.h"
+#include "../../utils/antiliaser/Antialiaser.h"
+#include "BrushSettings.h"
 
-// too different from pencil to create a shared base, sorry bud
-class Brush : public BufferedMode, public Antialiased, public Colored, public Thickened {
+class BrushMode : public BufferedMode {
 private:
+  BrushSettings settings;
+  Antialiaser antialiaser;
   sf::Vector2i prev_pos;
   bool is_down;
   void updateTexture(sf::RenderTexture &render_texture);
@@ -12,7 +15,7 @@ private:
                 sf::Vector2f pos1, sf::Vector2f pos2, sf::Color color);
 
 public:
-  Brush();
+  BrushMode();
   bool onMouseDown(sf::RenderTexture &render_texture, sf::Vector2f mouse_pos,
                    sf::Vector2f texture_pos) override;
   bool onMouseUp(sf::RenderTexture &render_texture, sf::Vector2f mouse_pos,

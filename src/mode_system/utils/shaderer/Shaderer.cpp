@@ -1,7 +1,7 @@
-#include "Shadered.h"
+#include "Shaderer.h"
 
-Shadered::Shadered() : Shadered("shader.frag") {}
-Shadered::Shadered(std::string path) {
+Shaderer::Shaderer() : Shaderer("shader.frag") {}
+Shaderer::Shaderer(std::string path) {
   if (!sf::Shader::isAvailable()) {
     throw std::runtime_error("Your system does not support shaders, which is necessary for proper functioning");
   }
@@ -11,6 +11,6 @@ Shadered::Shadered(std::string path) {
   }
 }
 
-sf::Shader *Shadered::getShader() {
+sf::Shader *Shaderer::getShader() {
   return &shader;
 }
