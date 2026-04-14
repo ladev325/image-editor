@@ -10,6 +10,13 @@ FillMode::FillMode()
 bool FillMode::onMouseDown(sf::RenderTexture &render_texture,
                            sf::Vector2f mouse_pos, sf::Vector2f texture_pos) {
   sf::Vector2u size = render_texture.getSize();
+  if (texture_pos.x < 0 ||
+      texture_pos.y < 0 ||
+      texture_pos.x > size.x ||
+      texture_pos.y > size.y) {
+    return false;
+  }
+
   sf::Color new_color = settings.color;
   float threshold = settings.threshold;
 

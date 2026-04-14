@@ -1,6 +1,6 @@
 #pragma once
+#include "../../mode_system/base/IMode.h"
 #include "../compositor/Compositor.h"
-#include "../../mode_system/mode_system.h" // IWYU pragma: export
 
 class Viewport {
 private:
@@ -13,11 +13,8 @@ private:
   bool mouse_down = false;
   sf::RenderTexture zoomed_rect_texture;
   sf::Sprite zoomed_rect_sprite;
-  std::unique_ptr<IMode> mode;
-
-  // render
-  void renderViewer(sf::RenderWindow &window);
-  void renderUI();
+  std::unique_ptr<IMode> &mode;
+  
   void clampPosition();
   sf::Vector2f mouseToTexturePos(sf::Vector2f mouse_coords) const;
 
@@ -29,11 +26,13 @@ private:
 
 public:
   Viewport();
-  Viewport(sf::Vector2u size, sf::Vector2f position, sf::Vector2f frame_size,
+  Viewport(std::unique_ptr<IMode> &mode,
+           sf::Vector2u size = {300, 300}, sf::Vector2f position = {0, 0}, sf::Vector2f frame_size = {300, 300},
            float outline_thickness = 2, sf::Color outline_color = sf::Color::White);
   void render(sf::RenderWindow &window);
-  void tick(const sf::Event &event, sf::RenderWindow &window);
+  void onEvent(const sf::Event &event, sf::RenderWindow &window);
   void setSize(sf::Vector2u size);
+  sf::Vector2u getSize() const;
 
   void setPosition(sf::Vector2f position);
   sf::Vector2f getPosition() const;

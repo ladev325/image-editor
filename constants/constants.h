@@ -6,6 +6,7 @@ namespace Constants {
     namespace Path {
         inline const std::string ShapeAAShader = "shaders/shape_aa.frag";
         inline const std::string FillShader = "shaders/fill.frag";
+        inline const std::string BackgroundShader = "shaders/background.frag";
     }
 
     namespace Viewer {

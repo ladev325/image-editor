@@ -5,12 +5,13 @@
 #include <algorithm>
 #include <cmath>
 
-Viewport::Viewport() : Viewport({300, 300}, {0, 0}, {300, 300}) {}
-Viewport::Viewport(sf::Vector2u size, sf::Vector2f position,
+Viewport::Viewport(std::unique_ptr<IMode> &mode,
+                   sf::Vector2u size, sf::Vector2f position,
                    sf::Vector2f frame_size, float outline_thickness,
                    sf::Color outline_color)
     : compositor(size), linear_scale(1), scale(1), position(0, 0),
       prev_mouse_pos(0, 0), mouse_down(false),
+      mode(mode),
       zoomed_rect_texture(sf::Vector2u(frame_size)),
       zoomed_rect_sprite(zoomed_rect_texture.getTexture()) {
   frame.setPosition(position);
@@ -18,66 +19,6 @@ Viewport::Viewport(sf::Vector2u size, sf::Vector2f position,
   frame.setFillColor(sf::Color::Transparent);
   frame.setOutlineThickness(outline_thickness);
   frame.setOutlineColor(outline_color);
-
-  mode = std::make_unique<FillMode>();
-  mode->setTextureSize(size);
-}
-
-// --------- PRIVATE RENDER ---------
-
-void Viewport::renderViewer(sf::RenderWindow &window) {
-  sf::Vector2f frame_size = frame.getSize();
-  const sf::RenderTexture &full_texture = compositor.getOutputTexture();
-  sf::Vector2f resolution{full_texture.getSize()};
-
-  // get visible region of the texture
-  sf::Vector2f view_size{frame_size.x / scale + 2.f,
-                         frame_size.y / scale + 2.f};
-  sf::Vector2f view_pos = (resolution - view_size) / 2.f + position;
-
-  // get fractional pos & size to adjust position smoothly
-  sf::Vector2f view_pos_i{std::floor(view_pos.x), std::floor(view_pos.y)};
-  sf::Vector2f view_size_i{std::floor(view_size.x), std::floor(view_size.y)};
-  sf::IntRect view_rect_i{sf::Vector2i(view_pos_i), sf::Vector2i(view_size_i)};
-  sf::Vector2f pos_fract{view_pos.x - view_pos_i.x, view_pos.y - view_pos_i.y};
-
-  // get rid of the mess outside of view_rect boundaries
-  auto safe_opt = view_rect_i.findIntersection({{0, 0}, sf::Vector2i(resolution)});
-  if (!safe_opt.has_value()) {
-    window.draw(frame);
-    return;
-  }
-  sf::IntRect safe_rect = *safe_opt;
-  sf::Vector2f clip_size{float(safe_rect.position.x - view_pos_i.x),
-                         float(safe_rect.position.y - view_pos_i.y)};
-
-  sf::RectangleShape zoomed_rect;
-  zoomed_rect.setPosition((clip_size - pos_fract) * scale);
-  zoomed_rect.setSize(sf::Vector2f(safe_rect.size) * scale);
-  zoomed_rect.setTextureRect(safe_rect);
-  zoomed_rect.setTexture(&full_texture.getTexture());
-
-  sf::RectangleShape inner_frame;
-  inner_frame.setPosition(zoomed_rect.getPosition());
-  inner_frame.setSize(zoomed_rect.getSize());
-  inner_frame.setFillColor(sf::Color::Transparent);
-  inner_frame.setOutlineThickness(Constants::Viewer::InnerFrameThickness);
-  inner_frame.setOutlineColor(Constants::Viewer::InnerFrameColor);
-
-  zoomed_rect_texture.clear(Constants::Viewer::BgColor);
-  zoomed_rect_texture.draw(zoomed_rect);
-  zoomed_rect_texture.draw(inner_frame);
-  zoomed_rect_texture.display();
-
-  window.draw(zoomed_rect_sprite);
-  window.draw(frame);
-}
-
-void Viewport::renderUI() {
-  // ImGui::Begin("Hello, world!");
-  // ImGui::Button("Look at this pretty button");
-  // ImGui::End();
-  mode->drawUI();
 }
 
 void Viewport::clampPosition() {
@@ -132,13 +73,56 @@ void Viewport::onMouseWheel(float delta, sf::Vector2f mouse_pos) {
 // --------- PUBLIC RENDER ---------
 
 void Viewport::render(sf::RenderWindow &window) {
-  renderViewer(window);
-  renderUI();
+  sf::Vector2f frame_size = frame.getSize();
+  const sf::RenderTexture &full_texture = compositor.getOutputTexture();
+  sf::Vector2f resolution{full_texture.getSize()};
+
+  // get visible region of the texture
+  sf::Vector2f view_size{frame_size.x / scale + 2.f,
+                         frame_size.y / scale + 2.f};
+  sf::Vector2f view_pos = (resolution - view_size) / 2.f + position;
+
+  // get fractional pos & size to adjust position smoothly
+  sf::Vector2f view_pos_i{std::floor(view_pos.x), std::floor(view_pos.y)};
+  sf::Vector2f view_size_i{std::floor(view_size.x), std::floor(view_size.y)};
+  sf::IntRect view_rect_i{sf::Vector2i(view_pos_i), sf::Vector2i(view_size_i)};
+  sf::Vector2f pos_fract{view_pos.x - view_pos_i.x, view_pos.y - view_pos_i.y};
+
+  // get rid of the mess outside of view_rect boundaries
+  auto safe_opt = view_rect_i.findIntersection({{0, 0}, sf::Vector2i(resolution)});
+  if (!safe_opt.has_value()) {
+    window.draw(frame);
+    return;
+  }
+  sf::IntRect safe_rect = *safe_opt;
+  sf::Vector2f clip_size{float(safe_rect.position.x - view_pos_i.x),
+                         float(safe_rect.position.y - view_pos_i.y)};
+
+  sf::RectangleShape zoomed_rect;
+  zoomed_rect.setPosition((clip_size - pos_fract) * scale);
+  zoomed_rect.setSize(sf::Vector2f(safe_rect.size) * scale);
+  zoomed_rect.setTextureRect(safe_rect);
+  zoomed_rect.setTexture(&full_texture.getTexture());
+
+  sf::RectangleShape inner_frame;
+  inner_frame.setPosition(zoomed_rect.getPosition());
+  inner_frame.setSize(zoomed_rect.getSize());
+  inner_frame.setFillColor(sf::Color::Transparent);
+  inner_frame.setOutlineThickness(Constants::Viewer::InnerFrameThickness);
+  inner_frame.setOutlineColor(Constants::Viewer::InnerFrameColor);
+
+  zoomed_rect_texture.clear(Constants::Viewer::BgColor);
+  zoomed_rect_texture.draw(zoomed_rect);
+  zoomed_rect_texture.draw(inner_frame);
+  zoomed_rect_texture.display();
+
+  window.draw(zoomed_rect_sprite);
+  window.draw(frame);
 }
 
 // --------- PUBLIC TICK ---------
 
-void Viewport::tick(const sf::Event &event, sf::RenderWindow &window) {
+void Viewport::onEvent(const sf::Event &event, sf::RenderWindow &window) {
   const auto *mouse_pressed = event.getIf<sf::Event::MouseButtonPressed>();
   const auto *mouse_released = event.getIf<sf::Event::MouseButtonReleased>();
   const auto *mouse_moved = event.getIf<sf::Event::MouseMoved>();
@@ -221,6 +205,10 @@ void Viewport::setSize(sf::Vector2u size) {
   mode->setTextureSize(size);
 }
 
+sf::Vector2u Viewport::getSize() const {
+  return compositor.getSize();
+}
+
 // --------- PUBLIC OUTLINE ---------
 
 void Viewport::setOutlineThickness(float thickness) {
@@ -258,7 +246,7 @@ sf::Vector2f Viewport::getFrameSize() const {
 }
 
 void Viewport::LAYER_TEST() {
-  sf::Texture imageTexture("src/stress2.jpg");
+  sf::Texture imageTexture("TEST/img.png");
   sf::Sprite imageSprite(imageTexture);
   setSize(imageTexture.getSize());
 

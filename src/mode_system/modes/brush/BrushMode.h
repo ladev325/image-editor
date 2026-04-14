@@ -1,6 +1,6 @@
 #pragma once
 #include "../../base/buffered_mode/BufferedMode.h"
-#include "../../utils/antiliaser/Antialiaser.h"
+#include "../../../utils/antialiaser/Antialiaser.h"
 #include "BrushSettings.h"
 
 class BrushMode : public BufferedMode {
