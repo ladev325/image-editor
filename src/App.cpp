@@ -37,11 +37,15 @@ void App::render(sf::RenderWindow &window) {
 
   ImGui::SetNextWindowPos(ImVec2(10, viewport.getPosition().y - viewport.getOutlineThickness()));
   ImGui::SetNextWindowSize(ImVec2(viewport.getPosition().x - 20, viewport.getFrameSize().y));
-  ImGui::Begin("Mode settings", nullptr, flags);
+  ImGui::Begin("Mode settings", 0, flags);
   mode->drawUI();
   ImGui::End();
 
-  ImGui::Begin("Mode select", nullptr, flags);
+
+  // mode selector
+  ImGui::SetNextWindowPos(ImVec2(viewport.getPosition().x, 10));
+  ImGui::SetNextWindowSize(ImVec2(viewport.getFrameSize().x, viewport.getPosition().y - 20));
+  ImGui::Begin("Mode select", 0, flags);
   if (mode_selector.drawUI()) {
     mode->setTextureSize(viewport.getSize());
   }

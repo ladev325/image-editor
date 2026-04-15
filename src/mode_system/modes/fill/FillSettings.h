@@ -21,10 +21,10 @@ struct FillSettings : public ISettings {
       color.a = temp_color[3] * 255.f;
     }
   }
-  enum class Mode { Local,
-                    Global };
 
-  Mode mode = Mode::Local;
-  sf::Color color = sf::Color::Blue;
-  float threshold = 0.4;
+  enum class Mode : int { Local,
+                          Global };
+  static inline Mode mode = Mode::Local;
+  static inline sf::Color color = sf::Color::Blue;
+  static inline float threshold = 0.4;
 };

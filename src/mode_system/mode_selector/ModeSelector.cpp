@@ -22,7 +22,9 @@ bool ModeSelector::drawUI() {
   };
 
   ModeButton("Pencil", (PencilMode *)0);
+  ImGui::SameLine();
   ModeButton("Fill", (FillMode *)0);
+  ImGui::SameLine();
   ModeButton("Brush", (BrushMode *)0);
   return changed;
 }

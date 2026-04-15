@@ -20,9 +20,8 @@ struct PencilSettings : public ISettings {
       color.a = temp_color[3] * 255.f;
     }
   }
-  enum class Mode { KeepAlpha,
-                    IncreaseAlpha };
-
-  Mode mode = Mode::KeepAlpha;
-  sf::Color color = sf::Color::Blue;
+  enum class Mode : int { KeepAlpha,
+                          IncreaseAlpha };
+  static inline Mode mode = Mode::KeepAlpha;
+  static inline sf::Color color = sf::Color::Blue;
 };

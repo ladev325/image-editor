@@ -20,7 +20,7 @@ struct BrushSettings : public ISettings {
     }
   }
 
-  sf::Color color = sf::Color::Blue;
-  int thickness = 10;
-  bool antialiased = true;
+  static inline sf::Color color = sf::Color::Blue;
+  static inline int thickness = 10;
+  static inline bool antialiased = true;
 };
