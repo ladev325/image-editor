@@ -46,7 +46,7 @@ void BrushMode::updateTexture(sf::RenderTexture &render_texture) {
   render_texture.clear(sf::Color::Transparent);
   render_texture.draw(buffer_sprites[0]);
   buffer_sprites[1].setColor(settings.color);
-  render_texture.draw(buffer_sprites[1], antialiaser.getShader());
+  render_texture.draw(buffer_sprites[1], settings.antialiased ? antialiaser.getShader() : nullptr);
   render_texture.display();
 }
 

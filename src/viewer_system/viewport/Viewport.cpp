@@ -163,9 +163,7 @@ void Viewport::onEvent(const sf::Event &event, sf::RenderWindow &window) {
   // mouse up
   if (mouse_released) {
     if (mouse_released->button == sf::Mouse::Button::Right) {
-      if (in_frame) {
         onMouseUp(mouse_pos);
-      }
     }
 
     else if (mouse_released->button == sf::Mouse::Button::Left) {
@@ -178,9 +176,7 @@ void Viewport::onEvent(const sf::Event &event, sf::RenderWindow &window) {
   // mouse move
   if (mouse_moved) {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-      if (in_frame) {
         onMouseDrag(mouse_pos);
-      }
     }
     else if (mode->onMouseMove(compositor.getActiveTexture(), mouse_pos, mouseToTexturePos(mouse_pos))) {
       compositor.display();
