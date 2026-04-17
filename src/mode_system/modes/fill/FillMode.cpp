@@ -1,9 +1,8 @@
 #include "FillMode.h"
-#include "constants.h"
+#include "global.h"
 
 FillMode::FillMode()
-    : BufferedMode(1),
-      shaderer(Constants::Path::FillShader) {
+    : BufferedMode(1) {
   i_settings = &settings;
 }
 
@@ -76,12 +75,12 @@ bool FillMode::onMouseDown(sf::RenderTexture &render_texture,
   else {
     float threshold_sq = threshold * threshold * 4.f;
     buffer_textures[0]->draw(sf::Sprite(render_texture.getTexture()));
-    sf::Shader *shader = shaderer.getShader();
-    shader->setUniform("resolution", sf::Vector2f(size));
-    shader->setUniform("click_pos", texture_pos);
-    shader->setUniform("color", sf::Glsl::Vec4(new_color));
-    shader->setUniform("threshold_sq", threshold_sq);
-    render_texture.draw(buffer_sprites[0], shader);
+    auto &shader = AssetManager::get<sf::Shader>(Constants::Path::FillShader);
+    shader.setUniform("resolution", sf::Vector2f(size));
+    shader.setUniform("click_pos", texture_pos);
+    shader.setUniform("color", sf::Glsl::Vec4(new_color));
+    shader.setUniform("threshold_sq", threshold_sq);
+    render_texture.draw(buffer_sprites[0], &shader);
   }
 
   render_texture.display();

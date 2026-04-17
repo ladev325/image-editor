@@ -4,6 +4,7 @@
 
 #include "imgui-SFML.h"
 #include "App.h"
+#include "global.h"
 
 // TODO: add CurrentMode(&render_texture) for texture caching on create,
 // -> cache for the next action right after onMouseDown
@@ -18,6 +19,7 @@ int main() {
 
   // vars
   sf::Clock delta_clock;
+  AssetManager::setRoot("assets/");
   App app;
 
   while (window.isOpen()) {

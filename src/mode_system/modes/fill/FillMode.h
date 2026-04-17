@@ -1,12 +1,10 @@
 #pragma once
-#include "../../../utils/shaderer/Shaderer.h"
 #include "../../base/buffered_mode/BufferedMode.h"
 #include "FillSettings.h"
 
 class FillMode : public BufferedMode {
 private:
   FillSettings settings;
-  Shaderer shaderer;
 
 public:
   FillMode();

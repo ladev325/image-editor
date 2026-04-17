@@ -17,4 +17,4 @@ file(GLOB_RECURSE SOURCE_FILES "src/*.cpp" "src/*.h")
 
 add_executable(app ${SOURCE_FILES})
 target_link_libraries(app PRIVATE ImGui-SFML::ImGui-SFML)
-target_include_directories(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/constants)
+target_include_directories(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/core/global)

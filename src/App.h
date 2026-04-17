@@ -1,5 +1,5 @@
 #pragma once
-#include "mode_system/mode_selector/ModeSelector.h"
+#include "core/mode_selector/ModeSelector.h"
 #include "viewer_system/viewport/Viewport.h"
 
 class App {

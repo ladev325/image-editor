@@ -1,12 +1,10 @@
 #pragma once
 #include "../../base/buffered_mode/BufferedMode.h"
-#include "../../../utils/antialiaser/Antialiaser.h"
 #include "BrushSettings.h"
 
 class BrushMode : public BufferedMode {
 private:
   BrushSettings settings;
-  Antialiaser antialiaser;
   sf::Vector2i prev_pos;
   bool is_down;
   void updateTexture(sf::RenderTexture &render_texture);

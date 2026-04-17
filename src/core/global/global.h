@@ -1,10 +1,11 @@
 #pragma once
+#include "../asset_manager/AssetManager.h"  // IWYU pragma: export
 #include <string>
 #include <SFML/Graphics.hpp>
 
 namespace Constants {
     namespace Path {
-        inline const std::string ShapeAAShader = "shaders/shape_aa.frag";
+        inline const std::string AntialiasingShader = "shaders/antialiasing.frag";
         inline const std::string FillShader = "shaders/fill.frag";
         inline const std::string BackgroundShader = "shaders/background.frag";
     }
@@ -20,7 +21,7 @@ namespace Constants {
         inline constexpr int InnerFrameThickness = 4;
     }
 
-    namespace ShapeAAShader {
+    namespace AntialiasingShader {
         inline constexpr int Radius = 1;
         inline constexpr float TightCoef = 0.15f;
     }

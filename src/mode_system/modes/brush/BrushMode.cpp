@@ -1,4 +1,5 @@
 #include "BrushMode.h"
+#include "global.h"
 #include <cmath>
 
 BrushMode::BrushMode()
@@ -42,11 +43,15 @@ void BrushMode::drawLine(sf::RenderTexture &render_texture,
 }
 
 void BrushMode::updateTexture(sf::RenderTexture &render_texture) {
-  antialiaser.setResolution(sf::Vector2f(buffer_textures[1]->getSize()));
+  auto& shader = AssetManager::get<sf::Shader>(Constants::Path::AntialiasingShader);
+  shader.setUniform("resolution", sf::Vector2f(buffer_textures[1]->getSize()));
+  shader.setUniform("radius", Constants::AntialiasingShader::Radius);
+  shader.setUniform("tight_coef", Constants::AntialiasingShader::TightCoef);
+
   render_texture.clear(sf::Color::Transparent);
   render_texture.draw(buffer_sprites[0]);
   buffer_sprites[1].setColor(settings.color);
-  render_texture.draw(buffer_sprites[1], settings.antialiased ? antialiaser.getShader() : nullptr);
+  render_texture.draw(buffer_sprites[1], settings.antialiased ? &shader : nullptr);
   render_texture.display();
 }
 
