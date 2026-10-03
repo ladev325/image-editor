@@ -11,7 +11,7 @@
 
 int main() {
   // init window
-  sf::RenderWindow window(sf::VideoMode({640, 480}), "App");
+  sf::RenderWindow window(sf::VideoMode({700, 700}), "App");
   window.setVerticalSyncEnabled(true);
   if (!ImGui::SFML::Init(window)) {
     return -1;

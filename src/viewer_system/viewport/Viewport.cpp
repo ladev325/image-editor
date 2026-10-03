@@ -22,8 +22,8 @@ Viewport::Viewport(std::unique_ptr<IMode> &mode,
 }
 
 void Viewport::clampPosition() {
-  sf::Vector2f resolution = sf::Vector2f(compositor.getSize());
-  sf::Vector2f max_offset = resolution / 2.f;
+  sf::Vector2f size = sf::Vector2f(compositor.getSize());
+  sf::Vector2f max_offset = size / 2.f;
   position.x = std::clamp(position.x, -max_offset.x + 1.f, max_offset.x + 1.f);
   position.y = std::clamp(position.y, -max_offset.y + 1.f, max_offset.y + 1.f);
 }
@@ -31,9 +31,9 @@ void Viewport::clampPosition() {
 sf::Vector2f Viewport::mouseToTexturePos(sf::Vector2f mouse_pos) const {
   sf::Vector2f frame_pos = frame.getPosition();
   sf::Vector2f frame_size = frame.getSize();
-  sf::Vector2f resolution{compositor.getOutputTexture().getSize()};
+  sf::Vector2f size{compositor.getOutputTexture().getSize()};
   sf::Vector2f view_size = frame_size / scale;
-  sf::Vector2f view_pos = (resolution - view_size) / 2.f + position;
+  sf::Vector2f view_pos = (size - view_size) / 2.f + position;
   sf::Vector2f texture_pos =
       view_pos + (mouse_pos - frame_pos) / scale - sf::Vector2f(1.f, 1.f);
   return texture_pos;
@@ -75,12 +75,12 @@ void Viewport::onMouseWheel(float delta, sf::Vector2f mouse_pos) {
 void Viewport::render(sf::RenderWindow &window) {
   sf::Vector2f frame_size = frame.getSize();
   const sf::RenderTexture &full_texture = compositor.getOutputTexture();
-  sf::Vector2f resolution{full_texture.getSize()};
+  sf::Vector2f size{full_texture.getSize()};
 
   // get visible region of the texture
   sf::Vector2f view_size{frame_size.x / scale + 2.f,
                          frame_size.y / scale + 2.f};
-  sf::Vector2f view_pos = (resolution - view_size) / 2.f + position;
+  sf::Vector2f view_pos = (size - view_size) / 2.f + position;
 
   // get fractional pos & size to adjust position smoothly
   sf::Vector2f view_pos_i{std::floor(view_pos.x), std::floor(view_pos.y)};
@@ -89,7 +89,7 @@ void Viewport::render(sf::RenderWindow &window) {
   sf::Vector2f pos_fract{view_pos.x - view_pos_i.x, view_pos.y - view_pos_i.y};
 
   // get rid of the mess outside of view_rect boundaries
-  auto safe_opt = view_rect_i.findIntersection({{0, 0}, sf::Vector2i(resolution)});
+  auto safe_opt = view_rect_i.findIntersection({{0, 0}, sf::Vector2i(size)});
   if (!safe_opt.has_value()) {
     window.draw(frame);
     return;
@@ -163,7 +163,7 @@ void Viewport::onEvent(const sf::Event &event, sf::RenderWindow &window) {
   // mouse up
   if (mouse_released) {
     if (mouse_released->button == sf::Mouse::Button::Right) {
-        onMouseUp(mouse_pos);
+      onMouseUp(mouse_pos);
     }
 
     else if (mouse_released->button == sf::Mouse::Button::Left) {
@@ -176,7 +176,7 @@ void Viewport::onEvent(const sf::Event &event, sf::RenderWindow &window) {
   // mouse move
   if (mouse_moved) {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-        onMouseDrag(mouse_pos);
+      onMouseDrag(mouse_pos);
     }
     else if (mode->onMouseMove(compositor.getActiveTexture(), mouse_pos, mouseToTexturePos(mouse_pos))) {
       compositor.display();
@@ -242,7 +242,7 @@ sf::Vector2f Viewport::getFrameSize() const {
 }
 
 void Viewport::LAYER_TEST() {
-  sf::Texture imageTexture("TEST/img.png");
+  sf::Texture imageTexture("TEST/anime.png");
   sf::Sprite imageSprite(imageTexture);
   setSize(imageTexture.getSize());
 

@@ -20,7 +20,7 @@ Compositor::Compositor(sf::Vector2u size)
 // ---------PRIVATE---------
 
 void Compositor::bufferChanges() {
-  sf::Vector2u resolution = getSize();
+  sf::Vector2u size = getSize();
 
   // assemble bottom
   if (std::distance(layers.begin(), active_layer) < 2) {
@@ -28,8 +28,8 @@ void Compositor::bufferChanges() {
   }
 
   else {
-    if (texture_bottom.getSize() != resolution) {
-      if (texture_bottom.resize(resolution)) {
+    if (texture_bottom.getSize() != size) {
+      if (texture_bottom.resize(size)) {
         sprite_bottom.setTexture(texture_bottom.getTexture(), true);
       }
     }
@@ -47,8 +47,8 @@ void Compositor::bufferChanges() {
   }
 
   else {
-    if (texture_top.getSize() != resolution) {
-      if (texture_top.resize(resolution)) {
+    if (texture_top.getSize() != size) {
+      if (texture_top.resize(size)) {
         sprite_top.setTexture(texture_top.getTexture(), true);
       }
     }

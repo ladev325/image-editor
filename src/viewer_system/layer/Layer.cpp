@@ -9,16 +9,16 @@ Layer::Layer(sf::Vector2u size)
 }
 
 void Layer::setSize(sf::Vector2u size) {
-  sf::RenderTexture old_texture(render_texture.getSize());
-  sf::Sprite old_sprite(old_texture.getTexture());
+  sf::RenderTexture backup_texture(render_texture.getSize());
+  sf::Sprite backup_sprite(backup_texture.getTexture());
 
-  old_texture.clear(sf::Color::Transparent);
-  old_texture.draw(sprite, sf::BlendNone);
-  old_texture.display();
+  backup_texture.clear(sf::Color::Transparent);
+  backup_texture.draw(sprite, sf::BlendNone);
+  backup_texture.display();
 
   if (render_texture.resize(size)) {
     render_texture.clear(sf::Color::Transparent);
-    render_texture.draw(old_sprite, sf::BlendNone);
+    render_texture.draw(backup_sprite, sf::BlendNone);
     render_texture.display();
     sprite.setTexture(render_texture.getTexture(), true);
   }
